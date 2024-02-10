@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 const URI = 'http://localhost:8000/usuarios/';
 
-const Users = () => {
+const ComShowUsers = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() =>{
@@ -55,4 +55,4 @@ const Users = () => {
   );
 }
 
-export default Users;
+export default ComShowUsers;

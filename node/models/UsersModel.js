@@ -11,6 +11,7 @@ const UsuarioModel = db.define('usuarios',{
     password:{type: DataTypes.STRING},
     nombre:{type: DataTypes.STRING },
     tipo_usuclave:{type: DataTypes.BIGINT},
+    lactivo:{type: DataTypes.BIGINT}
 })
 
 //Exportacion de mdelo

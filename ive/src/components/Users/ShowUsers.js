@@ -18,19 +18,22 @@ const ComShowUsers = () => {
   };
 
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col'>
-          <Link to="/create" className='btn btn-primary mt-2 mb-2'>AGREGAR USUARIO</Link>
+    <div className='container mt-3'>
+      <div className='card'>
+        <div className='card-header'>
+        <Link to="/create" className='btn btn-primary mt-2 mb-2'><i className="fa-solid fa-user"></i><i className="fa-solid fa-plus"></i></Link>
+        </div>
+        <div className='card-body'>
+        <div className='table-responsive-sm'>
           <table className='table'>
-            <thead className='table-primary'>
+            <thead>
               <tr>
                 <th>USUARIO</th>
                 <th>PASSOWRD</th>
                 <th>NOMBRE</th>
                 <th>TIPO USUARIO</th>
+                <th>ACTIVO</th>
                 <th>ACCIONES</th>
-                
               </tr>
             </thead>
             <tbody>
@@ -40,6 +43,7 @@ const ComShowUsers = () => {
                   <td>{usuario.password}</td>
                   <td>{usuario.nombre}</td>
                   <td>{usuario.tipo_usuclave}</td>
+                  <td>{usuario.lactivo.toString() === '1' ? 'Activo' : 'Desactivado'}</td>
                   <td>
                     <Link to={`/edit/${usuario.idUsuario}`} className='btn btn-info'>
                       EDITAR
@@ -49,9 +53,11 @@ const ComShowUsers = () => {
               ))}
             </tbody>
           </table>
+          </div>
+        </div>
         </div>
       </div>
-    </div>
+    
   );
 }
 

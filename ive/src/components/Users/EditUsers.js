@@ -10,20 +10,25 @@ const CompEditUser = () => {
     const [nombre, setNombre] = useState('');
     const [tipo_usuclave, setTipo] = useState('');
     const [lactivo, setActivo] = useState('');
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const {idusuario} = useParams();
+    const {idUsuario} = useParams();
 
     const update = async(e) => {
         e.preventDefault();
+        if (!usuario || !password || !nombre || !tipo_usuclave || !lactivo) {
+            setError('Todos los campos son requeridos'); // Establecer mensaje de error
+            return; // Detener el flujo si hay campos vacíos
+        }
         try {
-            await axios.put(URI + idusuario,{
+            await axios.put(URI + idUsuario,{
                 usuario: usuario,
                 password: password,
                 nombre: nombre,
                 tipo_usuclave: tipo_usuclave,
                 lactivo: lactivo
             });
-            navigate('/');
+            navigate('/users');
         } catch (error) {
             console.error("Error updating blog:", error);
         }
@@ -31,26 +36,35 @@ const CompEditUser = () => {
 
     useEffect(() => {
         getUserId();
-    },[idusuario]);
+    },[idUsuario]);
 
-   const getUserId = async () => {
-    try {
-        const res = await axios.get(URI + idusuario);
-        setUsuario(res.data.usuario);
-        setPassword(res.data.password);
-        setNombre(res.data.nombre);
-        setTipo(res.data.tipo_usuclave);
-        setActivo(res.data.lactivo);
-    } catch (error) {
-        console.error("Error fetching blog by ID:", error);
-    }
-   };
+    // Lógica para inicializar los valores de los estados
+    const initializeValues = (data) => {
+        setUsuario(data.usuario || ''); // Si data.usuario es undefined, se inicializa con un string vacío
+        setPassword(data.password || '');
+        setNombre(data.nombre || '');
+        setTipo(data.tipo_usuclave || '');
+        setActivo(data.lactivo || '');
+    };
+
+    const getUserId = async () => {
+        try {
+            const res = await axios.get(URI + idUsuario);
+            initializeValues(res.data); // Llamar a la función para inicializar los valores de los estados
+        } catch (error) {
+            console.error("Error fetching blog by ID:", error);
+        }
+    };
 
    return(
-        <div>
-            <h3>EDITAR USUARIO</h3>
-            <form onSubmit={update}>
-                <div className="mb-3">
+    <div className="container mt-3">
+      <div className="card">
+        <div className="card-header">
+            <h3 className="d-flex justify-content-center">Datos del Usuario</h3>
+        </div>
+        <div className="card-body">
+        <form onSubmit={update}> 
+        <div className="mb-3">
                     <label className="form-label">Usuario</label>
                     <input 
                     value={usuario}
@@ -63,7 +77,7 @@ const CompEditUser = () => {
                     <label className="form-label">Contraseña</label>
                     <input 
                     value={password}
-                    onChange={(e) => setUsuario(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     type="text"
                     className="form-control"
                     />
@@ -72,7 +86,7 @@ const CompEditUser = () => {
                     <label className="form-label">Nombre</label>
                     <input 
                     value={nombre}
-                    onChange={(e) => setUsuario(e.target.value)}
+                    onChange={(e) => setNombre(e.target.value)}
                     type="text"
                     className="form-control"
                     />
@@ -81,13 +95,27 @@ const CompEditUser = () => {
                     <label className="form-label">Permiso</label>
                     <input 
                     value={tipo_usuclave}
-                    onChange={(e) => setUsuario(e.target.value)}
+                    onChange={(e) => setTipo(e.target.value)}
                     type="text"
                     className="form-control"
                     />
                 </div>
-            </form>
+                <div className="mb-3">
+                    <label className="form-label">Estado</label>
+                <select
+                value={lactivo}
+                onChange={(e) => setActivo(e.target.value)}
+                className="form-select"
+                >
+                    <option value={"1"}>Activo</option>
+                    <option value={"0"}>Desactivado</option>
+                </select>
+                </div>
+                <button type='submit' className='btn btn-primary'>Guardar</button>
+        </form>
         </div>
+        </div>  
+     </div>
    );
 }
 

@@ -47,7 +47,7 @@ export const updateUser = async(req, res) => {
         res.json({
             "message" : "Usuario actualizado correctamente"
         })
-    }catch(errp ){
+    }catch(error ){
         res.json({message: error.message})
     }
 }
@@ -63,6 +63,6 @@ export const deleteuser = async (req, res) => {
             "message" : "Usuario eliminado correctamente"
         })
     } catch (error) {
-        es.json({message: error.message})
+        res.json({message: error.message})
     }
 }

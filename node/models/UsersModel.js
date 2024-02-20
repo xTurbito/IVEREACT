@@ -1,7 +1,7 @@
 //Importacion de la conexio a la base de datos
 import db from "../database/db.js"
-//Importacion sequelize
-import { DataTypes } from "sequelize";
+
+import { DataTypes } from "sequelize"
 
 //Parametros de la tabla usuarios.
 //Por defecto sequelize asume que hay un campo id, para evitar eso poner primarykey: true

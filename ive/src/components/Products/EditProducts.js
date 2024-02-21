@@ -9,14 +9,14 @@ const CompEditProduct = () => {
     const [Descripcion, setDescripcion] = useState('');
     const [Precio,setPrecio]  = useState('');
     const [Stock, setStock]  = useState('');
-    const [lactivo, setActivo] = useState('');
+    const [lActivo, setActivo] = useState('');
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const {idProducto} = useParams();
 
     const update = async(e) => {
         e.preventDefault();
-        if(!Nombre || !Descripcion || !Precio || !Stock || !!lactivo){
+        if(!Nombre || !Descripcion || !Precio || !Stock || !!lActivo){
             setError('Todos los campos son requeridos');
             return;
         }
@@ -25,7 +25,7 @@ const CompEditProduct = () => {
                 Nombre: Nombre,
                 Descripcion: Descripcion,
                 Stock: Stock,
-                lactivo : lactivo
+                lActivo : lActivo
             });
             navigate('/products')
         }catch(error){
@@ -42,6 +42,7 @@ const CompEditProduct = () => {
     const initializeValues = (data) => {
         setNombre(data.Nombre || '');
         setDescripcion(data.Descripcion || '');
+        setStock(data.Stock || '');
         setPrecio(data.Precio || '');
         setActivo(data.lactivo || '');
     };
@@ -59,12 +60,12 @@ const CompEditProduct = () => {
         <div className="container mt-3">
           <div className="card">
             <div className="card-header">
-                <h3 className="d-flex justify-content-center">Datos del Usuario</h3>
+                <h3 className="d-flex justify-content-center">Datos del Producto</h3>
             </div>
             <div className="card-body">
             <form onSubmit={update}> 
             <div className="mb-3">
-                        <label className="form-label">Usuario</label>
+                        <label className="form-label">Producto</label>
                         <input 
                         value={Nombre}
                         onChange={(e) => setNombre(e.target.value)}
@@ -73,7 +74,7 @@ const CompEditProduct = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label className="form-label">Contraseña</label>
+                        <label className="form-label">Descripcion</label>
                         <input 
                         value={Descripcion}
                         onChange={(e) => setDescripcion(e.target.value)}
@@ -82,7 +83,7 @@ const CompEditProduct = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label className="form-label">Nombre</label>
+                        <label className="form-label">Precio</label>
                         <input 
                         value={Precio}
                         onChange={(e) => setPrecio(e.target.value)}
@@ -91,7 +92,7 @@ const CompEditProduct = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label className="form-label">Permiso</label>
+                        <label className="form-label">Stock</label>
                         <input 
                         value={Stock}
                         onChange={(e) => setStock(e.target.value)}
@@ -102,7 +103,7 @@ const CompEditProduct = () => {
                     <div className="mb-3">
                         <label className="form-label">Estado</label>
                     <select
-                    value={lactivo}
+                    value={lActivo}
                     onChange={(e) => setActivo(e.target.value)}
                     className="form-select"
                     >

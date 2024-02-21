@@ -11,14 +11,19 @@ export const getAllProducts = async (req, res) => {
 }
 
 //Mostrar un registro
-export const getProduct = async (req, res) => {
+export const getProduct = async(req, res) => {
     try {
         const product = await ProductsModel.findAll({
-            where: { idProducto: req.params.idProducto }
+            where: {idProducto: req.params.idProducto}
         });
-        res.json(product[0]);
+
+        if (product.length > 0) {
+            res.json(product[0]);
+        } else {
+            res.status(404).json({ message: "Producto no encontrado" });
+        }
     } catch (error) {
-        res.json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 }
 
@@ -30,9 +35,10 @@ export const createProduct = async (req, res) => {
             "message": "Producto creado correctamente"
         });
     } catch (error) {
-        res.json({ message: error.message });
+        res.status(500).json({ message: error.message });
     }
 }
+
 
 //Actualizar un producto
 export const updateProduct = async (req, res) => {

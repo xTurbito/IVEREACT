@@ -30,7 +30,7 @@ const CompEditUser = () => {
             });
             navigate('/users');
         } catch (error) {
-            console.error("Error updating blog:", error);
+            console.error("rror a la hora de actualziar:", error);
         }
     };
 

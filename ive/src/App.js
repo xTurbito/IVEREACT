@@ -18,7 +18,7 @@ function App() {
           <Route path="/editUsuario/:idUsuario" element={<CompEditUsers />} />
           <Route path="/create" element={<CompCreateUser />} />
           <Route path="products" element={<CompShowProducts />} />
-          <Route  path="/editProducto/:idProducto" element={<CompEditProduct />}/>
+          <Route path="/editProducto/:idProducto" element={<CompEditProduct />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </BrowserRouter>

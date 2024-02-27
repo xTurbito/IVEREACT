@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { DeleteButton, EditButton } from "../Buttons/DeleteButtons";
 
 const URI = "http://localhost:8000/usuarios/";
 
@@ -52,12 +53,15 @@ const ComShowUsers = () => {
                         : "Desactivado"}
                     </td>
                     <td>
-                      <Link
+                      <EditButton
+                        component={Link}
                         to={`/editUsuario/${usuario.idUsuario}`}
                         className="btn btn-info"
                       >
-                        EDITAR
-                      </Link>
+                        Editar
+                      </EditButton>
+
+                      <DeleteButton />
                     </td>
                   </tr>
                 ))}

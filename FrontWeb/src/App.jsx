@@ -7,6 +7,7 @@ import CompEditUsers from "./components/Users/EditUsers";
 import CompCreateUser from "./components/Users/CreateUser";
 import CompShowProducts from "./components/Products/ShowProducts";
 import CompEditProduct from "./components/Products/EditProducts";
+import "./App.css"
 
 
 function App() {

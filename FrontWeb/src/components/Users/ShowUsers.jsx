@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { DeleteButton, EditButton } from "../Buttons/DeleteButtons";
+import { DeleteButton, EditButton } from "../Buttons/TableButtons";
+
 
 const URI = "http://localhost:8000/usuarios/";
 
@@ -23,8 +24,7 @@ const ComShowUsers = () => {
       <div className="card">
         <div className="card-header">
           <Link to="/create" className="btn btn-primary mt-2 mb-2">
-            <i className="fa-solid fa-user"></i>
-            <i className="fa-solid fa-plus"></i>
+            
           </Link>
         </div>
         <div className="card-body">
@@ -53,15 +53,14 @@ const ComShowUsers = () => {
                         : "Desactivado"}
                     </td>
                     <td>
-                      <EditButton
+                      <Link
                         component={Link}
-                        to={`/editUsuario/${usuario.idUsuario}`}
-                        className="btn btn-info"
+                        to={`/editUsuario/${usuario.idUsuario}`} 
+                        style={{marginRight: '8px'}}
                       >
-                        Editar
-                      </EditButton>
-
-                      <DeleteButton />
+                        <EditButton/>
+                      </Link>
+                      <DeleteButton/>
                     </td>
                   </tr>
                 ))}

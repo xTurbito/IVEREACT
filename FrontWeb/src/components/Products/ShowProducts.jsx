@@ -1,6 +1,7 @@
 import axios from 'axios'
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
+import { DeleteButton, EditButton } from '../Buttons/TableButtons';
 
 const URI = 'http://localhost:8000/productos/';
 
@@ -32,6 +33,7 @@ const CompShowProducts = () => {
                     <th>DESCRIPCION</th>
                     <th>PRECIO</th>
                     <th>STOCK</th>
+                    <th>ACTIVO</th>
                     <th>ACCIONES</th>
                   </tr>
                 </thead>
@@ -44,9 +46,11 @@ const CompShowProducts = () => {
                       <td>{productos.Stock}</td>
                       <td>{productos.lActivo.toString() === '1' ? 'Activo' : 'Desactivado'}</td>
                       <td>
-                        <Link to={`/editProducto/${productos.idProducto}`} className='btn btn-info'>
-                          EDITAR
+                        <Link to={`/editProducto/${productos.idProducto}`} >
+                          
+                          <EditButton/>
                         </Link>
+                        <DeleteButton/>
                       </td>
                     </tr>
                   ))}

@@ -56,7 +56,7 @@ const ComShowUsers = () => {
                       <Link
                         component={Link}
                         to={`/editUsuario/${usuario.idUsuario}`} 
-                        style={{marginRight: '8px'}}
+                        
                       >
                         <EditButton/>
                       </Link>

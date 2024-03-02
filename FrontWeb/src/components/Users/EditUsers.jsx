@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 const URI = 'http://localhost:8000/usuarios/';
 
@@ -11,6 +12,7 @@ const CompEditUser = () => {
         nombre: '',
         tipo_usuclave: '',
         lactivo: ''
+        
     });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
@@ -32,6 +34,12 @@ const CompEditUser = () => {
         } catch (error) {
             console.error("Error al actualizar:", error);
         }
+        Swal.fire({
+            title: "<strong>Actualizacion Exitosa</strong>",
+            html: "<i>El usuario <strong>"+userData.nombre+"</strong> fue actualizado con exito</i>",
+            icon: "sucess",
+            timer:3000
+          });
     };
 
     const getUserId = async () => {
@@ -43,6 +51,7 @@ const CompEditUser = () => {
         }
     };
 
+   
     return (
         <div className="container mt-3">
             <div className="card">
@@ -58,6 +67,7 @@ const CompEditUser = () => {
                                 onChange={(e) => setUserData({ ...userData, usuario: e.target.value })}
                                 type="text"
                                 className="form-control"
+                                required
                             />
                         </div>
                         <div className="mb-3">
@@ -67,6 +77,7 @@ const CompEditUser = () => {
                                 onChange={(e) => setUserData({ ...userData, password: e.target.value })}
                                 type="text"
                                 className="form-control"
+                                required
                             />
                         </div>
                         <div className="mb-3">
@@ -76,6 +87,7 @@ const CompEditUser = () => {
                                 onChange={(e) => setUserData({ ...userData, nombre: e.target.value })}
                                 type="text"
                                 className="form-control"
+                                required
                             />
                         </div>
                         <div className="mb-3">
@@ -85,6 +97,7 @@ const CompEditUser = () => {
                                 onChange={(e) => setUserData({ ...userData, tipo_usuclave: e.target.value })}
                                 type="text"
                                 className="form-control"
+                               
                             />
                         </div>
                         <div className="mb-3">
@@ -96,6 +109,7 @@ const CompEditUser = () => {
                             >
                                 <option value={"1"}>Activo</option>
                                 <option value={"0"}>Desactivado</option>
+                                required
                             </select>
                         </div>
                         <button type='submit' className='btn btn-primary'>Guardar</button>

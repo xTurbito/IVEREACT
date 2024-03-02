@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate,useParams } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const URI =  'http://localhost:8000/productos/';
 
@@ -33,6 +34,13 @@ const CompEditProduct = () => {
         }catch(error){
             console.error("Error a la hora de actualziar:", error);
         }
+        Swal.fire({
+            title: "<strong>Actualizacion Exitosa</strong>",
+            html: "<i>El Producto <strong>"+productData.Nombre+"</strong> fue actualizado con exito</i>",
+            icon: "sucess",
+            timer:3000
+          });
+        
     };
 
 

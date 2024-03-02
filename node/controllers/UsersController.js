@@ -54,7 +54,7 @@ export const updateUser = async(req, res) => {
 
 
 //Eleminiar un registro
-export const deleteuser = async (req, res) => {
+export const deleteUser = async (req, res) => {
     try {
         await UsersModel.destroy({
             where: {idUsuario: req.params.idUsuario}

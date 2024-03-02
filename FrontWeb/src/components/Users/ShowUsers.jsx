@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { DeleteButton, EditButton } from "../Buttons/TableButtons";
-
+import "./Users.css";
+import Swal from "sweetalert2";
 
 const URI = "http://localhost:8000/usuarios/";
 
-const ComShowUsers = () => {
+const CompShowUsers = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -19,12 +19,49 @@ const ComShowUsers = () => {
     setUsers(res.data);
   };
 
+  //Eliminar usuario
+  const deleteUser = async (idUsuario) => {
+    try {
+      const res = await axios.get(`${URI}${idUsuario}`);
+      const usuario = res.data;
+      Swal.fire({
+        title: "Confirmar Eliminado?",
+        html:
+          "<i>Realmente desea eliminar a <strong>" +
+          usuario.nombre +
+          "</strong></i>",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminarlo",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await axios.delete(`${URI}${idUsuario}`);
+          getUsers();
+          Swal.fire({
+            title: "Eliminado!",
+            text: "" + usuario.nombre + " fue eliminado.",
+            icon: "success",
+          });
+        }
+      });
+    } catch (error) {
+      console.error("Error al obtener el usuario:", error);
+    }
+  };
+  
   return (
     <div className="container mt-3">
       <div className="card">
         <div className="card-header">
-          <Link to="/create" className="btn btn-primary mt-2 mb-2">
-            
+          <Link
+            to="/createUser"
+            className="btn mt-2 mb-2 btn-hover-gray"
+            style={{ color: "#8000ff" }}
+          >
+            Usuario{" "}
+            <i className="fa-solid fa-plus" style={{ color: "#8000ff" }}></i>
           </Link>
         </div>
         <div className="card-body">
@@ -55,12 +92,19 @@ const ComShowUsers = () => {
                     <td>
                       <Link
                         component={Link}
-                        to={`/editUsuario/${usuario.idUsuario}`} 
-                        
+                        to={`/editUsuario/${usuario.idUsuario}`}
+                        className="btn btn-hover-gray "
+                        style={{ color: "blue" }}
                       >
-                        <EditButton/>
+                        <i className="fa-solid fa-user-pen"></i>
                       </Link>
-                      <DeleteButton/>
+                      <button
+                        onClick={() => deleteUser(usuario.idUsuario)}
+                        className="btn btn-hover-gray"
+                        style={{ color: "red" }}
+                      >
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -73,4 +117,4 @@ const ComShowUsers = () => {
   );
 };
 
-export default ComShowUsers;
+export default CompShowUsers;

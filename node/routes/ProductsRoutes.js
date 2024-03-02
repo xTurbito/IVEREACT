@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.get('/',getAllProducts)
 router.get('/:idProducto',getProduct)
-router.post('/',createProduct)
+router.post('/create',createProduct)
 router.put('/:idProducto',updateProduct)
 router.delete('/:idProducto',deleteProduct)
 

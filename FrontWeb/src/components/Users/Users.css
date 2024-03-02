@@ -1,0 +1,5 @@
+.btn-hover-gray:hover {
+    background-color: #f2f2f2;
+    transition: background-color 0.3s ease;
+  }
+  

@@ -11,6 +11,7 @@ const CompCreateProduct = () => {
     const [Descripcion, setDescripcion ] = useState("");
     const [Precio, setPrecio] = useState("");
     const [Stock, setStock] = useState("");
+    const [precio_cost, setPrecioCost] = useState("");
     const [lActivo, setActivo] = useState("");
     
     const navigate = useNavigate();
@@ -63,7 +64,16 @@ const CompCreateProduct = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label className="form-label">Precio</label>
+                        <label className="form-label">Precio Costo</label>
+                        <input 
+                        value={precio_cost}
+                        onChange={(e) => setPrecioCost( e.target.value)}
+                        type="text"
+                        className="form-control"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label className="form-label">Precio Venta</label>
                         <input 
                         value={Precio}
                         onChange={(e) => setPrecio( e.target.value)}
@@ -90,6 +100,9 @@ const CompCreateProduct = () => {
                         <option value={"1"}>Activo</option>
                         <option value={"0"}>Desactivado</option>
                     </select>
+                    </div>
+                    <div className="dropzone mb-3">
+                        <input type="file" />
                     </div>
                     <button type='submit' className='btn btn-primary'>Guardar</button>
             </form>

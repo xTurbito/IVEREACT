@@ -10,9 +10,12 @@ import CompCreateUser from "./components/Users/CreateUser";
 import CompShowProducts from "./components/Products/ShowProducts";
 import CompEditProduct from "./components/Products/EditProducts";
 import CompCreateProduct from './components/Products/CreateProduct';
+import ImageBloob from './components/ImageBlobs/ImageBlob';
 import "./main.css"
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+import { createRoot } from 'react-dom/client'; 
+
+createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <div className="Main">
       <BrowserRouter>
@@ -25,6 +28,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <Route path="products" element={<CompShowProducts />} />
           <Route path="/createProduct" element={<CompCreateProduct />} />
           <Route path="/editProducto/:idProducto" element={<CompEditProduct />} />
+          <Route path="/Imagenes" element={<ImageBloob />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </BrowserRouter>

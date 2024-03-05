@@ -12,6 +12,7 @@ const CompEditProduct = () => {
     Precio: "",
     Stock: "",
     lActivo: "",
+    fotoproducto : "",
     precio_cost: "",
   });
   const [error, setError] = useState(null);
@@ -30,6 +31,7 @@ const CompEditProduct = () => {
       !productData.Precio ||
       !productData.Stock ||
       !productData.precio_cost ||
+      !productData.fotoproducto ||
       !productData.lActivo
     ) {
       setError("Todos los campos son requeridos");
@@ -53,13 +55,33 @@ const CompEditProduct = () => {
   };
 
   const getProductId = async () => {
-    try {
-      const res = await axios.get(URI + idProducto);
-      setProductData(res.data);
-    } catch (error) {
-      console.error("Error fetching blog by ID:", error);
-    }
-  };
+  try {
+    const res = await axios.get(URI + idProducto);
+    setProductData({
+      ...res.data,
+      fotoproducto: res.data.fotoproducto 
+    });
+    setImgs(res.data.fotoproducto); 
+  } catch (error) {
+    console.error("Error fetching product by ID:", error);
+  }
+};
+
+
+  //Convertir imagen base64
+    const [imgs,setImgs] = useState();
+    const handleChange = (e) => {
+      const file = e.target.files[0];
+      const data = new FileReader();
+      data.addEventListener('load', () => {
+        setImgs(data.result);
+        setProductData({ ...productData, fotoproducto: data.result }); 
+      });
+      data.readAsDataURL(file);
+    };
+    
+
+
 
   return (
     <div className="container mt-3">
@@ -124,7 +146,7 @@ const CompEditProduct = () => {
               <input
                 value={productData.Stock}
                 onChange={(e) => {
-                  const stockValue = e.target.value.trim(); // Eliminar espacios en blanco al inicio y al final
+                  const stockValue = e.target.value.trim();
                   const stock = stockValue === "" ? 0 : parseInt(stockValue);
                   setProductData({ ...productData, Stock: stock });
                 }}
@@ -146,6 +168,12 @@ const CompEditProduct = () => {
                 <option value={"0"}>Desactivado</option>
               </select>
             </div>
+                <div className="mb-3">
+                  <label  className="form-label">Foto</label><br />
+                  <input type="file" onChange={handleChange} className="form-control" /><br />
+                  <img src={imgs}  width='300px' height='300px'/>
+               </div>
+
             <button type="submit" className="btn btn-primary">
               Guardar
             </button>

@@ -11,6 +11,7 @@ const ProductsModel = db.define('productos',{
     Precio:{type: DataTypes.DECIMAL},
     Stock:{type:DataTypes.BIGINT},
     precio_cost:{type: DataTypes.DECIMAL},
+    fotoproducto: {type: DataTypes.STRING},
     lActivo:{type:DataTypes.INTEGER}
 })
 

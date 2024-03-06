@@ -27,9 +27,6 @@ const NavBarIVE = () => {
               <Nav.Link as={Link} to="/Clients">
                Clientes
               </Nav.Link>
-              <Nav.Link as={Link} to="/Imagenes">
-               Imagenes
-              </Nav.Link>
               <NavDropdown
                 id="nav-dropdown-dark-example"
                 title="Reportes"

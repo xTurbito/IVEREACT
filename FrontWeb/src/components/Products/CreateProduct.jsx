@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import convertBase64 from "../ImageBase64/ConvertBase64"; 
 
 const URI = "http://localhost:8000/productos/";
 
@@ -13,17 +14,32 @@ const CompCreateProduct = () => {
   const [precio_cost, setPrecioCost] = useState("");
   const [fotoproducto, setFotoProducto] = useState("");
   const [lActivo, setActivo] = useState("");
+ 
 
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    const data = new FileReader();
+    data.addEventListener("load", () => {
+      setFotoProducto(data.result); 
+    });
+    data.readAsDataURL(file);
+  };
+
   const bdProducto = async (e) => {
     e.preventDefault();
+
+
+    // Redimensionar la imagen antes de enviarla
+    const resizedImage = await convertBase64(fotoproducto);
     await axios.post(URI, {
       Nombre,
       Descripcion,
       Precio,
       Stock,
       precio_cost,
-      fotoproducto,
+      fotoproducto: resizedImage, // Usar la imagen redimensionada
       lActivo,
     });
     navigate("/Products");
@@ -33,29 +49,16 @@ const CompCreateProduct = () => {
         "<i>El Producto <strong>" +
         Nombre +
         "</strong> fue registrado con exito</i>",
-      icon: "sucess",
+      icon: "success",
       timer: 3000,
     });
   };
-
-  //Convertir imagen base64
-  const [imgs, setImgs] = useState();
-  const handleChange = (e) => {
-    const file = e.target.files[0];
-    const data = new FileReader();
-    data.addEventListener("load", () => {
-      setImgs(data.result);
-      setFotoProducto(data.result); 
-    });
-    data.readAsDataURL(file);
-  };
-  
 
   return (
     <div className="container mt-3">
       <div className="card">
         <div className="card-header">
-          <h3 className="d-flex justify-content-center">NuevoProducto</h3>
+          <h3 className="d-flex justify-content-center">Nuevo Producto</h3>
         </div>
         <div className="card-body">
           <form onSubmit={bdProducto}>
@@ -121,14 +124,11 @@ const CompCreateProduct = () => {
               <br />
               <input
                 type="file"
-                onChange={(e) => {
-                  handleChange(e);
-                  setFotoProducto(e.target.value);
-                }}
+                onChange={handleChange} // Usar handleChange directamente aquí
                 className="form-control"
               />
               <br />
-              <img src={imgs} width="300px" height="300px" />
+              {fotoproducto && <img src={fotoproducto} width="300px" height="300px" />}
             </div>
 
             <button type="submit" className="btn btn-primary">

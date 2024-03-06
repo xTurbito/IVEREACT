@@ -13,6 +13,7 @@ app.use(express.json())
 app.use('/Usuarios', UserRoutes)
 app.use('/Productos',ProductSRoutes)
 
+
 try {
     await db.authenticate()
     console.log("Conexion exitosa a la base de datos")

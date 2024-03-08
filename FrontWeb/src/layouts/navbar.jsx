@@ -32,7 +32,7 @@ const NavBarIVE = () => {
                 title="Reportes"
                 menuVariant="dark"
               >
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                <NavDropdown.Item as={Link}  to="/CatalogoProducts">Productos</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Another action
                 </NavDropdown.Item>

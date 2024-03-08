@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBarIVE from "./layouts/navbar";
@@ -10,6 +9,7 @@ import CompCreateUser from "./components/Users/CreateUser";
 import CompShowProducts from "./components/Products/ShowProducts";
 import CompEditProduct from "./components/Products/EditProducts";
 import CompCreateProduct from './components/Products/CreateProduct';
+import CompShowCatalogos from './components/Catalogos/ShowCatalogos';
 import "./main.css"
 
 import { createRoot } from 'react-dom/client'; 
@@ -27,6 +27,7 @@ createRoot(document.getElementById('root')).render(
           <Route path="products" element={<CompShowProducts />} />
           <Route path="/createProduct" element={<CompCreateProduct />} />
           <Route path="/editProducto/:idProducto" element={<CompEditProduct />} />
+          <Route path="/CatalogoProducts" element={<CompShowCatalogos />} />
           <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>
       </BrowserRouter>

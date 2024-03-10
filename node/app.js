@@ -5,13 +5,15 @@ import cors from 'cors';
 import db from "./database/db.js"
 //Importacion de enrutado
 import UserRoutes from './routes/UserRoutes.js'
-import ProductSRoutes from './routes/ProductsRoutes.js'
+import ProductsRoutes from './routes/ProductsRoutes.js'
+import DepartamentsRoutes from './routes/DepartamentsRoutes.js'
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 app.use('/Usuarios', UserRoutes)
-app.use('/Productos',ProductSRoutes)
+app.use('/Productos',ProductsRoutes)
+app.use('/Departamentos', DepartamentsRoutes)
 
 
 try {

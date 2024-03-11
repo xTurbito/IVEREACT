@@ -1,8 +1,8 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import convertBase64 from "../ImageBase64/ConvertBase64"; 
+import convertBase64 from "../ImageBase64/ConvertBase64";
 
 const URI = "http://localhost:8000/productos/";
 
@@ -14,22 +14,36 @@ const CompCreateProduct = () => {
   const [precio_cost, setPrecioCost] = useState("");
   const [fotoproducto, setFotoProducto] = useState("");
   const [lActivo, setActivo] = useState("");
- 
-
+  const [IDDepartamento, setDepartamento] = useState("");
+  const [departamentos, setDepartamentos] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Función para obtener los departamentos desde la API
+    const getDepartamentos = async () => {
+      try {
+        const res = await axios.get("http://localhost:8000/departamentos");
+        setDepartamentos(res.data); // Actualiza el estado con los departamentos obtenidos
+      } catch (error) {
+        console.error("Error al obtener los departamentos:", error);
+      }
+    };
+
+    // Llamada a la función para obtener los departamentos
+    getDepartamentos();
+  }, []);
 
   const handleChange = (e) => {
     const file = e.target.files[0];
     const data = new FileReader();
     data.addEventListener("load", () => {
-      setFotoProducto(data.result); 
+      setFotoProducto(data.result);
     });
     data.readAsDataURL(file);
   };
 
   const bdProducto = async (e) => {
     e.preventDefault();
-
 
     // Redimensionar la imagen antes de enviarla
     const resizedImage = await convertBase64(fotoproducto);
@@ -41,6 +55,7 @@ const CompCreateProduct = () => {
       precio_cost,
       fotoproducto: resizedImage, // Usar la imagen redimensionada
       lActivo,
+      Departamento,
     });
     navigate("/Products");
     Swal.fire({
@@ -86,7 +101,7 @@ const CompCreateProduct = () => {
               <input
                 value={precio_cost}
                 onChange={(e) => setPrecioCost(e.target.value)}
-                type="text"
+                type="number"
                 className="form-control"
               />
             </div>
@@ -95,7 +110,7 @@ const CompCreateProduct = () => {
               <input
                 value={Precio}
                 onChange={(e) => setPrecio(e.target.value)}
-                type="text"
+                type="number"
                 className="form-control"
               />
             </div>
@@ -107,6 +122,21 @@ const CompCreateProduct = () => {
                 type="text"
                 className="form-control"
               />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Departamento</label>
+              <select
+                value={IDDepartamento}
+                onChange={(e) => setDepartamento(e.target.value)}
+                className="form-select"
+              >
+                <option value="">Selecciona un departamento</option>
+                {departamentos.map((departamento) => (
+                  <option key={departamento.IDDepartamento} value={departamento.IDDepartamento}>
+                    {departamento.NombreDepartamento}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="mb-3">
               <label className="form-label">Estado</label>
@@ -128,7 +158,9 @@ const CompCreateProduct = () => {
                 className="form-control"
               />
               <br />
-              {fotoproducto && <img src={fotoproducto} width="300px" height="300px" />}
+              {fotoproducto && (
+                <img src={fotoproducto} width="300px" height="300px" />
+              )}
             </div>
 
             <button type="submit" className="btn btn-primary">

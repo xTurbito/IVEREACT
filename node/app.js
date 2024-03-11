@@ -8,6 +8,8 @@ import UserRoutes from './routes/UserRoutes.js'
 import ProductsRoutes from './routes/ProductsRoutes.js'
 import DepartamentsRoutes from './routes/DepartamentsRoutes.js'
 
+
+
 const app = express()
 app.use(cors())
 app.use(express.json())

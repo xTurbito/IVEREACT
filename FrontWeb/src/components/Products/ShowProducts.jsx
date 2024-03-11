@@ -70,6 +70,7 @@ const CompShowProducts = () => {
                     <th>DESCRIPCION</th>
                     <th>PRECIO</th>
                     <th>STOCK</th>
+                    <th>DEPARTAMENTO</th>
                     <th>ACTIVO</th>
                     <th>ACCIONES</th>
                   </tr>
@@ -81,6 +82,7 @@ const CompShowProducts = () => {
                       <td>{productos.Descripcion}</td>
                       <td>{productos.Precio}</td>
                       <td>{productos.Stock}</td>
+                      <td>{productos.departamento.NombreDepartamento}</td>
                       <td>{productos.lActivo.toString() === '1' ? 'Activo' : 'Desactivado'}</td>
                       <td>
                         <Link to={`/editProducto/${productos.idProducto}`} 

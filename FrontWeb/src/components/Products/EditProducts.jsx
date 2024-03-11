@@ -15,6 +15,7 @@ const CompEditProduct = () => {
     lActivo: "",
     fotoproducto: "",
     precio_cost: "",
+    
   });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -134,7 +135,7 @@ const CompEditProduct = () => {
                     precio_cost: e.target.value,
                   })
                 }
-                type="text"
+                type="number"
                 className="form-control"
               />
             </div>
@@ -145,7 +146,7 @@ const CompEditProduct = () => {
                 onChange={(e) =>
                   setProductData({ ...productData, Precio: e.target.value })
                 }
-                type="text"
+                type="number"
                 className="form-control"
               />
             </div>
@@ -172,6 +173,7 @@ const CompEditProduct = () => {
                 }
                 className="form-select"
               >
+                
                 <option value={"1"}>Activo</option>
                 <option value={"0"}>Desactivado</option>
               </select>

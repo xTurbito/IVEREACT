@@ -24,6 +24,9 @@ const NavBarIVE = () => {
               <Nav.Link as={Link} to="/Products">
                 Productos
               </Nav.Link>
+              <Nav.Link as={Link} to="/Departaments">
+                Departamentos
+              </Nav.Link>
               <Nav.Link as={Link} to="/Clients">
                Clientes
               </Nav.Link>

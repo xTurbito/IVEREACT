@@ -1,34 +1,35 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import "./Users.css";
 import Swal from "sweetalert2";
 
-const URI = "http://localhost:8000/usuarios/";
+const URI = "http://localhost:8000/departamentos/"
 
-const CompShowUsers = () => {
-  const [users, setUsers] = useState([]);
+const CompShowDepartaments = () => {
+  const [departaments, setDepartaments] = useState([]);
+
 
   useEffect(() => {
-    getUsers();
+    getDepartaments();
   }, []);
 
-  // Obtiene todos los usuarios
-  const getUsers = async () => {
+  //Obtiene todos los departamentos
+  const getDepartaments = async () => {
     const res = await axios.get(URI);
-    setUsers(res.data);
+    setDepartaments(res.data);
   };
 
-  //Eliminar usuario
-  const deleteUser = async (idUsuario) => {
+
+  //Eliminar Departamento 
+  const deleteDepartament = async (IDDepartamento) => {
     try {
-      const res = await axios.get(`${URI}${idUsuario}`);
-      const usuario = res.data;
+      const res = await axios.get(`${URI}${IDDepartamento}`);
+      const departamento = res.data;
       Swal.fire({
         title: "Confirmar Eliminado?",
         html:
           "<i>Realmente desea eliminar a <strong>" +
-          usuario.nombre +
+          departamento.NombreDepartamento +
           "</strong></i>",
         icon: "warning",
         showCancelButton: true,
@@ -37,11 +38,11 @@ const CompShowUsers = () => {
         confirmButtonText: "Si, eliminarlo",
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await axios.delete(`${URI}${idUsuario}`);
-          getUsers();
+          await axios.delete(`${URI}${IDDepartamento}`);
+          getDepartaments();
           Swal.fire({
             title: "Eliminado!",
-            text: "" + usuario.nombre + " fue eliminado.",
+            text: "" + departamento.NombreDepartamento + " fue eliminado.",
             icon: "success",
           });
         }
@@ -49,18 +50,17 @@ const CompShowUsers = () => {
     } catch (error) {
       console.error("Error al obtener el usuario:", error);
     }
-  };
+  }
 
   return (
     <div className="container mt-3">
       <div className="card">
         <div className="card-header">
-          <Link
-            to="/createUser"
-            className="btn mt-2 mb-2 btn-hover-gray"
-            style={{ color: "#8000ff" }}
+          <Link to="/createDepartament"
+          className="btn mt-2 mb-2 btn-hover-gray"
+          style={{color: "#8000ff"}}
           >
-            Usuario{" "}
+            Departamento{" "}
             <i className="fa-solid fa-plus" style={{ color: "#8000ff" }}></i>
           </Link>
         </div>
@@ -69,27 +69,21 @@ const CompShowUsers = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <th>USUARIO</th>
-                  <th>PASSOWRD</th>
                   <th>NOMBRE</th>
-                  <th>TIPO USUARIO</th>
                   <th>ACTIVO</th>
                   <th>ACCIONES</th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((usuario) => (
-                  <tr key={usuario.idUsuario}>
-                    <td>{usuario.usuario}</td>
-                    <td>{usuario.password}</td>
-                    <td>{usuario.nombre}</td>
-                    <td>{usuario.tipoUsuario.nombre}</td>
-                    <td>{usuario.lactivo.toString() === "1" ? "Activo" : "Desactivado"}</td>
+                {departaments.map((departamento) => (
+                  <tr key={departamento.IDDepartamento}>
+                    <td>{departamento.NombreDepartamento}</td>
+                    <td>{departamento.lActivo.toString() == "1" ? "Activo" : "Desactivado"}</td>
                     <td>
-                      <Link to={`/editUsuario/${usuario.idUsuario}`} className="btn btn-hover-gray" style={{ color: "blue" }}>
+                      <Link to={`/editDepartamento/${departamento.IDDepartamento}`} className="btn btn-hover-gray" style={{ color: "blue" }}>
                         <i className="fa-solid fa-user-pen"></i>
                       </Link>
-                      <button onClick={() => deleteUser(usuario.idUsuario)} className="btn btn-hover-gray" style={{ color: "red" }}>
+                      <button onClick={() => deleteDepartament(departamento.IDDepartamento)} className="btn btn-hover-gray" style={{ color: "red" }}>
                         <i className="fa-solid fa-trash"></i>
                       </button>
                     </td>
@@ -104,4 +98,30 @@ const CompShowUsers = () => {
   );
 };
 
-export default CompShowUsers;
+export default CompShowDepartaments;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

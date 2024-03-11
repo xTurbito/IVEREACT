@@ -1,17 +1,25 @@
 //Importamos el model 
 import UsersModel from "../models/UsersModel.js";
+import TipoUsuarioModel from "../models/TipoUsuarioModel.js";
 
 //Metodos para el CRUD 
 
 //Mostrar todos los registros
-export const getAllUsers = async(req,res)=> {
+
+export const getAllUsers = async (req, res) => {
     try {
-        const users = await UsersModel.findAll()
-        res.json(users)
+        const users = await UsersModel.findAll({
+            include: {
+                model: TipoUsuarioModel, // Nombre del modelo de tipo de usuario
+                as: 'tipoUsuario' // Alias para la relación
+            }
+        });
+        res.json(users);
     } catch (error) {
-        res.json({message: error.message})
+        res.json({ message: error.message });
     }
 }
+
 
 //Mostrar un registro
 export const getUser = async (req,res) => {

@@ -1,18 +1,17 @@
-//Importacion de la conexio a la base de datos
-import db from "../database/db.js"
+import db from "../database/db.js";
+import { DataTypes } from "sequelize";
+import TipoUsuarioModel from "./TipoUsuarioModel.js";
 
-import { DataTypes } from "sequelize"
+const UsersModel = db.define('usuario',{
+    idUsuario: { type: DataTypes.BIGINT, primaryKey: true },
+    usuario: { type: DataTypes.STRING },
+    password: { type: DataTypes.STRING },
+    nombre: { type: DataTypes.STRING },
+    tipo_usuclave: { type: DataTypes.BIGINT }, 
+    lactivo: { type: DataTypes.BIGINT }
+});
 
-//Parametros de la tabla usuarios.
-//Por defecto sequelize asume que hay un campo id, para evitar eso poner primarykey: true
-const UsuarioModel = db.define('usuarios',{
-    idUsuario:{type: DataTypes.BIGINT, primaryKey: true},
-    usuario:{type: DataTypes.STRING},
-    password:{type: DataTypes.STRING},
-    nombre:{type: DataTypes.STRING },
-    tipo_usuclave:{type: DataTypes.BIGINT},
-    lactivo:{type: DataTypes.BIGINT}
-})
+// Definir la relación con el modelo de tipo de usuario
+UsersModel.belongsTo(TipoUsuarioModel, { foreignKey: 'tipo_usuclave', as: 'tipoUsuario' });
 
-//Exportacion de mdelo
-export default UsuarioModel
+export default UsersModel;

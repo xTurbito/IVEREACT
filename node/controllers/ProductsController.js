@@ -1,9 +1,15 @@
 import ProductsModel from "../models/ProductsModel.js";
+import DepartamentsModels from "../models/DepartamentsModeL.js";
 
 //Mostrar todos los productos
 export const getAllProducts = async (req, res) => {
     try {
-        const products = await ProductsModel.findAll();
+        const products = await ProductsModel.findAll({
+            include: {
+                model: DepartamentsModels,
+                as: 'departamento'
+            }
+        });
         res.json(products);
     } catch (error) {
         res.json({ message: error.message });

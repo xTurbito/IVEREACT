@@ -90,8 +90,8 @@ const CompCreateUser = () => {
                 required // Aquí agregamos la propiedad required
               >
                 <option value="">Selecciona un estado</option>
-                <option value="Activo">Activo</option>
-                <option value="Desactivado">Desactivado</option>
+                <option value="1">Activo</option>
+                <option value="0">Desactivado</option>
               </select>
             </div>
 

@@ -2,6 +2,7 @@
 import db from "../database/db.js"
 //Importacion sequelize
 import { DataTypes } from "sequelize";
+import DepartamentsModels from "./DepartamentsModeL.js";
 
 //Parametros de los Productos
 const ProductsModel = db.define('productos',{
@@ -12,7 +13,10 @@ const ProductsModel = db.define('productos',{
     Stock:{type:DataTypes.BIGINT},
     precio_cost:{type: DataTypes.DECIMAL},
     fotoproducto: {type: DataTypes.STRING},
-    lActivo:{type:DataTypes.INTEGER}
+    lActivo:{type:DataTypes.INTEGER},
+    IDDepartamento: {type: DataTypes.INTEGER}
 })
+
+ProductsModel.belongsTo(DepartamentsModels,{foreignKey: 'IDDepartamento', as: 'departamento'})
 
 export default ProductsModel 

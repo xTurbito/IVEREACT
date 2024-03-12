@@ -55,7 +55,7 @@ const CompCreateProduct = () => {
       precio_cost,
       fotoproducto: resizedImage, // Usar la imagen redimensionada
       lActivo,
-      Departamento,
+      departamentos
     });
     navigate("/Products");
     Swal.fire({

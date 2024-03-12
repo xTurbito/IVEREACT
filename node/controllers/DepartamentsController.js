@@ -1,10 +1,11 @@
-import DepartamentsModel from "../models/DepartamentsModel.js";
+import DepartamentsModels from "../models/DepartamentsModel.js";
+import ProductsModel from "../models/ProductsModel.js"
 
 
 //Mostrar todos los registros
 export const getAllDepartaments = async (req,res) => {
     try{
-        const departaments = await DepartamentsModel.findAll();
+        const departaments = await DepartamentsModels.findAll();
         res.json(departaments);
     }catch(error){
         res.json({message: error.message})
@@ -15,8 +16,8 @@ export const getAllDepartaments = async (req,res) => {
 //Mostrar un registro
 export const getDepartament = async(req,res) => {
     try{
-        const departament = await DepartamentsModel.findAll({
-            where: {IDDepartamento: req.params.IDDepartamento}
+        const departament = await DepartamentsModels.findAll({
+            where: {IDDepartamento: req.params.IDDepartamento},
         });
         if(departament.length > 0){
             res.json(departament[0]);
@@ -32,7 +33,7 @@ export const getDepartament = async(req,res) => {
 //Crear un Departamento
 export const createDepartament = async(req, res) => {
     try {
-        await DepartamentsModel.create(req.body);
+        await DepartamentsModels.create(req.body);
         res.json({
             "message": "Departamento creado correctamente"
         });
@@ -44,7 +45,7 @@ export const createDepartament = async(req, res) => {
 //Actualizar un Departamento
 export const updateDepartament = async(req,res) => {
     try {
-       await DepartamentsModel.update(req.body, {
+       await DepartamentsModels.update(req.body, {
         where: {IDDepartamento: req.params.IDDepartamento}
        });
        res.json({
@@ -58,7 +59,7 @@ export const updateDepartament = async(req,res) => {
 //Eliminar
 export const deleteDepartament = async(req,res) => {
     try {
-        await DepartamentsModel.destroy({
+        await DepartamentsModels.destroy({
             where: {
                 IDDepartamento: req.params.IDDepartamento
             }

@@ -1,5 +1,5 @@
 import ProductsModel from "../models/ProductsModel.js";
-import DepartamentsModels from "../models/DepartamentsModeL.js";
+import DepartamentsModels from "../models/DepartamentsModel.js";
 
 //Mostrar todos los productos
 export const getAllProducts = async (req, res) => {
@@ -17,10 +17,14 @@ export const getAllProducts = async (req, res) => {
 }
 
 //Mostrar un registro
-export const getProduct = async(req, res) => {
+export const getProduct = async (req, res) => {
     try {
         const product = await ProductsModel.findAll({
-            where: {idProducto: req.params.idProducto}
+            where: { idProducto: req.params.idProducto }, // Filtrar productos por idProducto
+            include: {
+                model: DepartamentsModels,
+                as: 'departamento'
+            }
         });
 
         if (product.length > 0) {
@@ -73,5 +77,25 @@ export const deleteProduct = async (req, res) => {
         });
     } catch (error) {
         res.json({ message: error.message });
+    }
+}
+
+
+export const getProductsByDepartment = async (req, res) => {
+    try {
+        const departmentId = req.params.IDDepartamento;
+
+        const products = await ProductsModel.findAll({
+            where: { IDDepartamento: departmentId },
+            include: {
+                model: DepartamentsModels,
+                as: 'departamento',
+                where: { IDDepartamento: departmentId }
+            }
+        });
+
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 }

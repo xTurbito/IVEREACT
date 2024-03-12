@@ -15,7 +15,7 @@ const CompEditProduct = () => {
     lActivo: "",
     fotoproducto: "",
     precio_cost: "",
-    
+    IDDepartamento: "",
   });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -34,7 +34,8 @@ const CompEditProduct = () => {
       !productData.Stock ||
       !productData.precio_cost ||
       !productData.fotoproducto ||
-      !productData.lActivo
+      !productData.lActivo ||
+      !productData.IDDepartamento
     ) {
       setError("Todos los campos son requeridos");
       return;
@@ -91,7 +92,19 @@ const CompEditProduct = () => {
     }
   };
 
-  
+  //Carga de los departamentos
+  const URIDepartaments = "http://localhost:8000/departamentos/";
+
+  const [departments, setDepartaments] = useState([]);
+  useEffect(() => {
+    getDepartaments();
+  }, []);
+
+  const getDepartaments = async () => {
+    const res = await axios.get(URIDepartaments);
+    setDepartaments(res.data);
+  };
+
   return (
     <div className="container mt-3">
       <div className="card">
@@ -163,7 +176,29 @@ const CompEditProduct = () => {
                 className="form-control"
               />
             </div>
-
+            <div className="mb-3">
+              <label className="form-label">Departamento</label>
+              <select
+                value={productData.IDDepartamento}
+                onChange={(e) =>
+                  setProductData({
+                    ...productData,
+                    IDDepartamento: e.target.value,
+                  })
+                }
+                className="form-select"
+              >
+                <option value="">Selecciona un departamento</option>
+                {departments.map((departamento) => (
+                  <option
+                    key={departamento.IDDepartamento}
+                    value={departamento.IDDepartamento}
+                  >
+                    {departamento.NombreDepartamento}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="mb-3">
               <label className="form-label">Estado</label>
               <select
@@ -173,7 +208,6 @@ const CompEditProduct = () => {
                 }
                 className="form-select"
               >
-                
                 <option value={"1"}>Activo</option>
                 <option value={"0"}>Desactivado</option>
               </select>

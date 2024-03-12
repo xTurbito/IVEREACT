@@ -2,7 +2,7 @@
 import db from "../database/db.js"
 //Importacion sequelize
 import { DataTypes } from "sequelize";
-import DepartamentsModels from "./DepartamentsModeL.js";
+import DepartamentsModels from "./DepartamentsModel.js";
 
 //Parametros de los Productos
 const ProductsModel = db.define('productos',{

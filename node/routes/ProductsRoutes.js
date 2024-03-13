@@ -20,6 +20,6 @@ router.put('/:idProducto', updateProduct);
 router.delete('/:idProducto', deleteProduct);
 
 // Nueva ruta para obtener todos los productos de un departamento específico
-router.get('/departamentos/:IDDepartamento/productos', getProductsByDepartment);
+router.get('/:IDDepartamento/productos', getProductsByDepartment);
 
 export default router;
